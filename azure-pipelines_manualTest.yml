@@ -1,0 +1,36 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- none
+pr:
+- develop
+stages:
+- stage: A Building Stage
+  pool:
+    name: jna-vmss-003
+  
+  jobs:
+  - job: CoverDotNetCore
+    steps:
+    - task: DotNetCoreCLI@2
+      displayName: DotNet Restore
+      inputs:
+        command: 'restore'
+        projects: 'NameOfSolutionFile.sln'
+        feedsToUse: 'select'
+        vstsFeed: 'FeedsToUse'
+    - task: DotNetCoreCLI@2
+      displayName: DotNet Build
+      inputs:
+        command: 'build'
+        projects: 'NameOfSolutionFile.sln'
+        arguments: '--no-restore --configuration $(BuildConfiguration) --output $(build.artifacstagingdirectory)'
+    - task: DotNetCoreCLI@2
+      displayName: DotNet Test
+      inputs:
+        command: 'test'
+        projects: 'NameOfSolutionFile.sln'
+        arguments: '--configuration $(BuildConfiguration)'
