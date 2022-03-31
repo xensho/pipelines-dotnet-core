@@ -1,6 +1,5 @@
 # A pipeline that should represent template for all GATED BUILD PIPELINES
-#
-# Add steps that build, run tests, deploy, and more:
+# Created by Stanko Opacic (03.2022)
 # https://aka.ms/yaml
 
 trigger:
